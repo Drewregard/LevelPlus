@@ -12,14 +12,14 @@ namespace LevelPlus {
         //[Header("Stats")]
         //[Label("Level: Health per Level")]
         //[Tooltip("How much HP the player gets per Level")]
-        [Range(0, 5)]
+        [Range(0, 10)]
         [DefaultValue(2)]
         public int HealthPerLevel;
 
         //[Label("Level: Mana per Level")]
         //[Tooltip("How much HP the player gets per Level")]
-        [Range(0, 5)]
-        [DefaultValue(1)]
+        [Range(0, 10)]
+        [DefaultValue(2)]
         public int ManaPerLevel;
 
         // --- //
@@ -33,7 +33,7 @@ namespace LevelPlus {
         //[Label("Constitution: LifeRegen")]
         //[Tooltip("How many Points needed to be spent for 1 LifeReg")]
         [Range(1, 30)]
-        [DefaultValue(20)]
+        [DefaultValue(15)]
         public int HRegenPerPoint;
 
         //[Label("Constitution: Defense")]
@@ -48,14 +48,14 @@ namespace LevelPlus {
         //[Tooltip("How much MagicDamage the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
-        [Increment(0.01f)]
-        [DefaultValue(0.01f)]
+        [Increment(0.005f)]
+        [DefaultValue(0.005f)]
         public float MagicDamagePerPoint;
 
         //[Label("Intelligence: Magic Crit")]
         //[Tooltip("How many Points needed to be spent for 1% Magic Crit")]
         [Range(1, 30)]
-        [DefaultValue(15)]
+        [DefaultValue(10)]
         public int MagicCritPerPoint;
 
         // --- //
@@ -64,14 +64,14 @@ namespace LevelPlus {
         //[Tooltip("How much MeleeDamage the player gets per point")]
         [Slider]
         [Range(0.00f, 0.10f)]
-        [Increment(0.01f)]
-        [DefaultValue(0.01f)]
+        [Increment(0.005f)]
+        [DefaultValue(0.005f)]
         public float MeleeDamagePerPoint;
 
         //[Label("Strength: Melee Crit")]
         //[Tooltip("How many Points needed to be spent for 1% Melee Crit")]
         [Range(1, 30)]
-        [DefaultValue(15)]
+        [DefaultValue(10)]
         public int MeleeCritPerPoint;
 
         // --- //
@@ -79,9 +79,9 @@ namespace LevelPlus {
         //[Label("Dexterity: Ranged Damage")]
         //[Tooltip("How much RangedDamage the player gets per point")]
         [Slider]
-        [Range(0.00f, 0.25f)]
-        [Increment(0.01f)]
-        [DefaultValue(0.01f)]
+        [Range(0.00f, 0.10f)]
+        [Increment(0.005f)]
+        [DefaultValue(0.005f)]
         public float RangedDamagePerPoint;
 
         //[Label("Dexterity: Ranged Crit")]
@@ -95,9 +95,9 @@ namespace LevelPlus {
         //[Label("Charisma: Summon Damage")]
         //[Tooltip("How much SummonDamage the player gets per point")]
         [Slider]
-        [Range(0.00f, 0.25f)]
-        [Increment(0.01f)]
-        [DefaultValue(0.01f)]
+        [Range(0.00f, 0.10f)]
+        [Increment(0.005f)]
+        [DefaultValue(0.005f)]
         public float SummonDamagePerPoint;
 
         //[Label("Charisma: Summon Crit")]
@@ -106,6 +106,21 @@ namespace LevelPlus {
         [DefaultValue(15)]
         public int SummonCritPerPoint;
 
+        // --- //
+        // Rogueness //
+        //[Label("Rogueness: Rogue Damage")]
+        //[Tooltip("How much RogueDamage the player gets per point")]
+        [Slider]
+        [Range(0.00f, 0.10f)]
+        [Increment(0.005f)]
+        [DefaultValue(0.01f)]
+        public float RogueDamagePerPoint;
+
+        //[Label("Rogueness: Rogue Crit")]
+        //[Tooltip("How many Points needed to be spent for 1% Rogue Crit")]
+        [Range(1, 30)]
+        [DefaultValue(5)]
+        public int RogueCritPerPoint;
 
         // --- //
         // Animalia //
@@ -131,8 +146,8 @@ namespace LevelPlus {
 
         //[Label("Animalia: Max Minions")]
         //[Tooltip("How many Points needed to be spent for 1 Minion Capacity")]
-        [Range(1, 30)]
-        [DefaultValue(20)]
+        [Range(1, 50)]
+        [DefaultValue(30)]
         public int MinionPerPoint;
 
 
@@ -252,27 +267,58 @@ namespace LevelPlus {
 
         //[Label("XP Increase")]
         //[Tooltip("Level Up Calculation related")]
-        [Range(50, 500)]
+        [Range(1, 500)]
         [DefaultValue(100)]
-        [Increment(25)]
+        [Increment(1)]
         [ReloadRequired]
         public int XPIncrease;
 
         //[Label("XP Rate")]
         //[Tooltip("Level Up Calculation related")]
         [Slider]
-        [Range(1.00f, 5.00f)]
-        [Increment(0.5f)]
+        [Range(1.00f, 4.00f)]
+        [Increment(0.25f)]
         [DefaultValue(2.0f)]
         [ReloadRequired]
         public float XPRate;
 
+        //[Label("SoftCap Toggle")]
+        //[Tooltip("Enables SoftCap")]
+        [DefaultValue(false)]
+        [ReloadRequired]
+        public bool SoftCapEnabled;
+
+        //[Label("SoftCap XP Increase")]
+        //[Tooltip("Level Up Calculation related")]
+        [Range(1, 500)]
+        [DefaultValue(7)]
+        [Increment(1)]
+        [ReloadRequired]
+        public int SoftCapIncrease;
+
+        //[Label("SoftCap XP Rate")]
+        //[Tooltip("Level Up Calculation related")]
+        [Slider]
+        [Range(1.00f, 4.00f)]
+        [Increment(0.25f)]
+        [DefaultValue(3.0f)]
+        [ReloadRequired]
+        public float SoftCapRate;
+
+        //[Label("SoftCap Level Threshold")]
+        //[Tooltip("Level Up Calculation related")]
+        [Range(1, 500)]
+        [DefaultValue(45)]
+        [Increment(1)]
+        [ReloadRequired]
+        public float SoftCapThreshold;
+
         //[Label("Mob Experience")]
         //[Tooltip("This is the percentage of mob HP you get in XP")]
         [Slider]
-        [Range(0.0f, 1.0f)]
+        [Range(0.0f, 2.0f)]
         [Increment(0.05f)]
-        [DefaultValue(0.35f)]
+        [DefaultValue(0.45f)]
         [ReloadRequired]
         public float MobXP;
 
@@ -281,7 +327,7 @@ namespace LevelPlus {
         [Slider]
         [Range(0.0f, 1.0f)]
         [Increment(0.05f)]
-        [DefaultValue(0.25f)]
+        [DefaultValue(0.15f)]
         [ReloadRequired]
         public float BossXP;
 
