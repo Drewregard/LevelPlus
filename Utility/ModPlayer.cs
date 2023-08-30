@@ -274,10 +274,14 @@ namespace LevelPlus {
     }
 
     public override void OnRespawn() {
-      base.OnRespawn();
-      //lose a quarter of your xp on death
-      currentXP = (ulong)(currentXP * .75);
+    base.OnRespawn();
+
+    // Check if the XP loss is enabled in the config
+    if (LevelPlusConfig.Instance.XPLossEnabled) {
+        // Lose a quarter of your XP on death
+        currentXP = (ulong)(currentXP * (1 - LevelPlusConfig.Instance.XPLossPenalty));
     }
+}
 
     public override void ResetEffects() {
       base.ResetEffects();
@@ -299,11 +303,14 @@ namespace LevelPlus {
       Player.GetCritChance(DamageClass.Summon) += charisma / LevelPlusConfig.Instance.SummonCritPerPoint;
       //animalia
       Player.fishingSkill += (int)(Player.fishingSkill * (animalia * LevelPlusConfig.Instance.FishSkillPerPoint));
-      //excavation
-      Player.pickSpeed *= 1.00f - (excavation * LevelPlusConfig.Instance.PickSpeedPerPoint);
-      Player.tileSpeed *= 1.00f + (excavation * LevelPlusConfig.Instance.BuildSpeedPerPoint);
-      Player.wallSpeed *= 1.00f + (excavation * LevelPlusConfig.Instance.BuildSpeedPerPoint);
-      Player.blockRange += excavation / LevelPlusConfig.Instance.RangePerPoint;
+      //Excavation DISABLED
+      //Player.pickSpeed *= 1.00f - (excavation * LevelPlusConfig.Instance.PickSpeedPerPoint);
+      //Player.tileSpeed *= 1.00f + (excavation * LevelPlusConfig.Instance.BuildSpeedPerPoint);
+      //Player.wallSpeed *= 1.00f + (excavation * LevelPlusConfig.Instance.BuildSpeedPerPoint);
+      // Player.blockRange += excavation / LevelPlusConfig.Instance.RangePerPoint;
+      //rogueness
+      Player.GetDamage(DamageClass.Throwing) *= 1.00f + (excavation * LevelPlusConfig.Instance.RogueDamagePerPoint);
+      Player.GetCritChance(DamageClass.Throwing) += excavation / LevelPlusConfig.Instance.RogueCritPerPoint;
       //mobility
       Player.maxRunSpeed *= 1.00f + (mobility * LevelPlusConfig.Instance.RunSpeedPerPoint);
       Player.runAcceleration *= 1.00f + (mobility * LevelPlusConfig.Instance.AccelPerPoint);
@@ -521,7 +528,18 @@ namespace LevelPlus {
     }
 
     public ulong CalculateNeededXP(ushort level) {
-      return (ulong)(LevelPlusConfig.Instance.XPIncrease * Math.Pow(level, LevelPlusConfig.Instance.XPRate) + LevelPlusConfig.Instance.XPBase);
+      ulong neededXP;
+
+      //Original equation for levels before the soft cap
+      if (level < LevelPlusConfig.Instance.SoftCapThreshold - 1) {
+        neededXP = (ulong)(LevelPlusConfig.Instance.XPIncrease * Math.Pow(level, LevelPlusConfig.Instance.XPRate) + LevelPlusConfig.Instance.XPBase);
+      }
+      //New equation for levels at or beyond the soft cap
+      else {
+        neededXP = (ulong)(LevelPlusConfig.Instance.SoftCapIncrease * Math.Pow(level, LevelPlusConfig.Instance.SoftCapRate) + LevelPlusConfig.Instance.XPBase);
+      }
+
+      return neededXP;
     }
 
     public override void CopyClientState(ModPlayer targetCopy) {

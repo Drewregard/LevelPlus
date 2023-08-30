@@ -23,8 +23,13 @@ namespace LevelPlus {
 
         averageLevel /= numPlayers;
 
-        npc.damage = (int)Math.Clamp(npc.damage * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage), 0, 2147483000);
-        npc.lifeMax = (int)Math.Clamp(npc.lifeMax * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth), 0, 2147483000);
+        //only apply scaling to non-boss enemies
+        if (!npc.boss)
+          {
+            npc.damage = (int)Math.Clamp(npc.damage * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingDamage), 0, 2147483000);
+            npc.lifeMax = (int)Math.Clamp(npc.lifeMax * (long)Math.Round(1 + averageLevel * LevelPlusConfig.Instance.ScalingHealth), 0, 2147483000);
+          }
+
       }
     }
 

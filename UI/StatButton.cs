@@ -68,6 +68,7 @@ namespace LevelPlus.UI {
                 case Stat.MOBILITY:
                     break;
                 case Stat.EXCAVATION:
+                    button.backgroundColor = Color.SlateGray;
                     break;
                 case Stat.ANIMALIA:
                     break;
@@ -151,10 +152,9 @@ namespace LevelPlus.UI {
                     break;
                 case Stat.EXCAVATION:
                     points.SetText("" + modPlayer.excavation);
-                    text = "Excavation:\n\n"
-                        + "  +" + ((int) (modPlayer.excavation * (LevelPlusConfig.Instance.PickSpeedPerPoint * 100))) + "% pick speed\n"
-                        + "  +" + ((int) (modPlayer.excavation * (LevelPlusConfig.Instance.BuildSpeedPerPoint * 100))) + "% place speed\n"
-                        + "  +" + (modPlayer.excavation / LevelPlusConfig.Instance.RangePerPoint) + " block range";
+                    text = "Rogueness:\n\n"
+                        + "  +" + ((int)(modPlayer.excavation * (LevelPlusConfig.Instance.PickSpeedPerPoint * 100))) + "% rogue damage\n"
+                        + "  +" + ((int)(modPlayer.excavation / LevelPlusConfig.Instance.MagicCritPerPoint)) + "% rogue crit\n";
                     rarity = 0; //white
                     break;
                 case Stat.ANIMALIA:

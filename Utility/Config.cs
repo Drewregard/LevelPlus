@@ -55,7 +55,7 @@ namespace LevelPlus {
         //[Label("Intelligence: Magic Crit")]
         //[Tooltip("How many Points needed to be spent for 1% Magic Crit")]
         [Range(1, 30)]
-        [DefaultValue(10)]
+        [DefaultValue(7)]
         public int MagicCritPerPoint;
 
         // --- //
@@ -181,8 +181,8 @@ namespace LevelPlus {
         //[Tooltip("How much Run Speed the player gets per point")]
         [Slider]
         [Range(0.00f, 0.05f)]
-        [Increment(0.001f)]
-        [DefaultValue(0.01f)]
+        [Increment(0.005f)]
+        [DefaultValue(0.015f)]
         public float RunSpeedPerPoint;
 
         //[Label("Mobility: Acceleration")]
@@ -190,7 +190,7 @@ namespace LevelPlus {
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
-        [DefaultValue(0.02f)]
+        [DefaultValue(0.025f)]
         public float AccelPerPoint;
 
         //[Label("Mobility: Wing Time")]
@@ -198,7 +198,7 @@ namespace LevelPlus {
         [Slider]
         [Range(0.00f, 0.10f)]
         [Increment(0.005f)]
-        [DefaultValue(0.02f)]
+        [DefaultValue(0.025f)]
         public float WingPerPoint;
 
         // --- //
@@ -214,7 +214,7 @@ namespace LevelPlus {
         //[Label("Luck: Ammo Consumption")]
         //[Tooltip("How much Points you need to Reach 100%")]
         [Range(50, 500)]
-        [DefaultValue(100)]
+        [DefaultValue(200)]
         [Increment(10)]
         public int AmmoPerPoint;
 
@@ -223,7 +223,7 @@ namespace LevelPlus {
         //[Label("Mysticism: Mana per Point")]
         //[Tooltip("How much Mana the player gets per point")]
         [Range(0, 25)]
-        [DefaultValue(2)]
+        [DefaultValue(3)]
         public int ManaPerPoint;
 
         //[Label("Mysticism: Mana Regen")]
@@ -235,9 +235,9 @@ namespace LevelPlus {
         //[Label("Mysticism: Mana Cost")]
         //[Tooltip("The percent of mana reduced per point invested")]
         [Slider]
-        [Range(0.00f, 0.025f)]
+        [Range(0.00f, 0.010f)]
         [Increment(0.001f)]
-        [DefaultValue(0.001f)]
+        [DefaultValue(0.002f)]
         public float ManaCostPerPoint;
 
         [SeparatePage]
@@ -284,7 +284,7 @@ namespace LevelPlus {
 
         //[Label("SoftCap Toggle")]
         //[Tooltip("Enables SoftCap")]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         [ReloadRequired]
         public bool SoftCapEnabled;
 
@@ -307,7 +307,7 @@ namespace LevelPlus {
 
         //[Label("SoftCap Level Threshold")]
         //[Tooltip("Level Up Calculation related")]
-        [Range(1, 500)]
+        [Range(1, 200)]
         [DefaultValue(45)]
         [Increment(1)]
         [ReloadRequired]
@@ -318,7 +318,7 @@ namespace LevelPlus {
         [Slider]
         [Range(0.0f, 2.0f)]
         [Increment(0.05f)]
-        [DefaultValue(0.45f)]
+        [DefaultValue(0.80f)]
         [ReloadRequired]
         public float MobXP;
 
@@ -351,9 +351,24 @@ namespace LevelPlus {
         [Slider]
         [Range(0.0050f, 0.050f)]
         [Increment(0.0050f)]
-        [DefaultValue(0.0250f)]
+        [DefaultValue(0.0100f)]
         [ReloadRequired]
         public float ScalingDamage;
+
+        //[Label("XP Loss")]
+        //[Tooltip("Enables XP loss on death")]
+        [DefaultValue(false)]
+        [ReloadRequired]
+        public bool XPLossEnabled;
+
+        //[Label("XP Penalty")]
+        //[Tooltip("This is the percentage of XP you lose on death")]
+        [Slider]
+        [Range(0.0f, 1.0f)]
+        [Increment(0.05f)]
+        [DefaultValue(0.25f)]
+        [ReloadRequired]
+        public float XPLossPenalty;
 
         //[Label("Commands")]
         //[Tooltip("Enables Commands")]
